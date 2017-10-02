@@ -1,3 +1,6 @@
 .o
 .hex
 .img
+/etc/eposcc.conf
+/etc/eposmkbi.conf
+/include/system/config.h
