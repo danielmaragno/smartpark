@@ -1,6 +1,4 @@
-#define HCSR04_RELAY
-
-#include "ultrasonic_sensor/sensor/ultrasonic_sensor_controller.h"
+#include "smartpark_sensor/ultrasonic_sensor_controller.h"
 #include <alarm.h>
 #include <gpio.h>
 #include <utility/ostream.h>
@@ -10,18 +8,17 @@ using namespace EPOS;
 OStream cout;
 
 int main(){
-    GPIO echo('C',7,GPIO::IN); // EXP2 5
-    GPIO trigger('C',6,GPIO::OUT); // EXP2 4
-    GPIO relay('B',3,GPIO::OUT);
+    GPIO echo('A',1,GPIO::IN); // EXP1 4
+    GPIO trigger('A',0,GPIO::OUT); // EXP1 3
 
-    Ultrasonic_Sensor_Controller controller(relay,trigger,echo);
+    Ultrasonic_Sensor_Controller controller(trigger,echo);
 
-    Alarm::delay(10000000); // time to initialize the ultrasonic sensor
+    //Alarm::delay(10000000); // time to initialize the ultrasonic sensor
     cout << "starting the reads!!" << endl;
     while(1){
         int s = controller.sense();
         cout << "distance: " << s << endl;
-        Alarm::delay(10000000 / 5);//5s
+        Alarm::delay(10000000 / 5);
     }
 
     // blink led no id_sender.cc

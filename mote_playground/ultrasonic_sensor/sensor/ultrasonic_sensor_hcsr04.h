@@ -22,24 +22,10 @@ protected:
     GPIO _trigger;
     GPIO _echo;
 
-    #ifdef HCSR04_RELAY // if using relays
-    GPIO _relay;
-
-    Ultrasonic_Sensor_HC_SR04(GPIO relay,GPIO trigger,GPIO echo): _trigger(trigger), _echo(echo), _relay(relay){
+    Ultrasonic_Sensor_HC_SR04(GPIO trigger,GPIO echo): _trigger(trigger), _echo(echo){
         _trigger.direction(GPIO::OUT);
         _echo.direction(GPIO::IN);
-        _relay.direction(GPIO::OUT);
     }
-
-    int enable() {_relay.set(); }
-    int disable(){_relay.clear(); }
-
-    #else
-    Ultrasonic_Sensor_HC_SR04(GPIO trigger,GPIO echo): _trigger(trigger), _echo(echo){
-        _trigger.output();
-        _echo.input();
-    }
-    #endif
 
     Sense sense()
     {
@@ -65,6 +51,7 @@ protected:
         while (!_echo.get() && (TSC::time_stamp() - t0 <= TIME_FRAME));
 
         elapsed_time = (TSC::time_stamp() - t0) * 1000000ull / TSC::FREQUENCY;
+        // cout << "elapsed_time: " << elapsed_time << endl;
         // the echo may get dissipated, in that case the timer will count all the way and the distance wouldn't be correcly calculated.
         return (elapsed_time > MAX_MEASURE_TIME_US)? -1 : elapsed_time/58;
     }
