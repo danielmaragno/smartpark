@@ -19,6 +19,6 @@ Exemplo:
 ````
 // desconecta o eposMote do USB
 cd arm
-make APPLICATION=smartpark_sink_test flash
+make APPLICATION=smartpark_ultrasonic_sensor_test clean flash
 // conecta o eposMote no USB
 ````
