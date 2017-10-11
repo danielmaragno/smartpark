@@ -3,6 +3,7 @@
 #include <gpio.h>
 #include <utility/ostream.h>
 #include <tsc.h>
+#include <machine.h>
 
 using namespace EPOS;
 
@@ -32,6 +33,8 @@ int main(){
         } else {
           cout << "Vaga LIVRE :) (" << s << " cm)" << endl;
         }
+
+        cout << "ID: " << Machine::id() << endl;
 
         // @todo: transmitir via TSTP se o estado da vaga for diferente do anterior
 
