@@ -22,3 +22,20 @@ cd arm
 make APPLICATION=smartpark_ultrasonic_sensor_test clean flash
 // conecta o eposMote no USB
 ````
+
+
+## Enviando dados para a núvem IoT
+
+Usamos a núvem IoT do LISHA para armazenar os dados de interesse recebidos pelo
+sink. Para fazer a leitura dos dados do sink, usamos um script em Python que
+faz a leitura pela USB e envia para a núvem do LISHA.
+
+````
+// Conecta ao sink a USB
+cd gateway
+./gateway -c cert.pem -D smartlisha
+// Insira a senha do certificado
+
+// Para dar kill no gateway execute
+./kill_gateway.sh
+````
