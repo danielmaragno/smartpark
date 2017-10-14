@@ -1,5 +1,5 @@
 #include "smartpark_sensor/ultrasonic.h"
-#include "smartpark_sensor/smart_ultrasonic.h"
+#include "smartpark_sensor/spot_transducer.h"
 #include <alarm.h>
 #include <gpio.h>
 #include <utility/ostream.h>
@@ -13,17 +13,18 @@ using namespace EPOS;
 OStream cout;
 
 int main(){
+    // ultrasonic pins
     GPIO    echo('A',0,GPIO::IN); // EXP1 3 - PA0 (UART RXD)
     GPIO trigger('A',1,GPIO::OUT); // EXP1 4 - PA1 (UART TXD)
 
     // create the ultrasonic sensor (low level)
     Ultrasonic ultrasonic(trigger, echo);
 
-    // create the spot transducer
-    Smartpark_Spot_Sensor spot_sensor(&ultrasonic);
+    // set the device 0 to this ultrasonic sensor
+    Distance_Sensor::_ultrasonic[0] = &ultrasonic;
 
-    // create the smart data spot
-    Smart_Data<spot_sensor> smart_spot(0, 1000000, Smartpark_Spot_Smart_Indicator::ADVERTISED);
+    // create the spot smart data
+    Smartpark_Spot_Smart_Data spot_smart_data(0, 1000000, Smartpark_Spot_Smart_Data::ADVERTISED);
 
     Thread::self()->suspend();
 

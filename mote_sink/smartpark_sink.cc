@@ -1,6 +1,7 @@
 #include <smart_data.h>
 #include <utility/ostream.h>
 #include <alarm.h>
+#include "smartpark_sensor/spot_transducer.h"
 
 using namespace EPOS;
 
@@ -60,10 +61,10 @@ int main()
 
     // Data of interest
     Switch data_switch(region, DATA_EXPIRY, DATA_PERIOD);
-    Temperature data_temperature(region, DATA_EXPIRY, DATA_PERIOD);
+    Smartpark_Spot_Smart_Data data_spot(region, DATA_EXPIRY, DATA_PERIOD);
 
     // Event-driven actuators
-    Printer<Temperature> p11(&data_temperature);
+    Printer<Smartpark_Spot_Smart_Data> p11(&data_spot);
 
     // Time-triggered actuators
     while(TSTP::now() < end) {
