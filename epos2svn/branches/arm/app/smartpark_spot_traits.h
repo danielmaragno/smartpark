@@ -1,0 +1,1 @@
+../../../../mote_spot/smartpark_spot_traits.h

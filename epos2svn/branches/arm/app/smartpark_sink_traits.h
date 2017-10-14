@@ -1,0 +1,1 @@
+../../../../mote_sink/smartpark_sink_traits.h
