@@ -45,11 +45,10 @@ sink. Para fazer a leitura dos dados do sink, usamos um script em Python que
 faz a leitura pela USB e envia para a núvem do LISHA.
 
 ````
-// Conecta ao sink a USB
+// Desconecta o sink a USB
 cd gateway
-./gateway -c cert.pem -P 'SENHA'
-// Insira a senha do certificado
-
-// Para dar kill no gateway execute
 ./kill_gateway.sh
+./gateway -j -c cert.pem -P 'SENHA'
+// Conecta ao sink a USB
+// Insira a senha do certificado
 ````
