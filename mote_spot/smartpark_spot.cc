@@ -21,10 +21,10 @@ int main(){
     Ultrasonic ultrasonic(trigger, echo);
 
     // set the device 0 to this ultrasonic sensor
-    Distance_Sensor::_ultrasonic[0] = &ultrasonic;
+    Smartpark_Spot_Transducer::ultrasonic[0] = &ultrasonic;
 
-    // create the spot smart data
-    Smartpark_Spot_Smart_Data spot_smart_data(0, 1000000, Smartpark_Spot_Smart_Data::ADVERTISED);
+    // create the spot smart data on the device 0
+    new Smartpark_Spot_Smart_Data(0, 1000000, Smartpark_Spot_Smart_Data::ADVERTISED);
 
     Thread::self()->suspend();
 
