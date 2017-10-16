@@ -20,8 +20,8 @@ parser.add_argument('-t','--timeout', help='Timeout for reading from mote', defa
 parser.add_argument('-u','--url', help='Post URL', default='https://iot.lisha.ufsc.br/api/put.php')
 parser.add_argument('-a','--attach_url', help='Attach URL', default='https://iot.lisha.ufsc.br/api/attach.php')
 parser.add_argument('-j','--json', help='Use JSON API', action='store_true')
-parser.add_argument('-D','--domain', help='Data domain', default='')
-parser.add_argument('-U','--username', help='Data domain username', default='')
+parser.add_argument('-D','--domain', help='Data domain', default='smartpark')
+parser.add_argument('-U','--username', help='Data domain username', default='smartpark')
 parser.add_argument('-P','--password', help='User password', default='')
 
 args = vars(parser.parse_args())
@@ -175,6 +175,8 @@ if __name__ == "__main__":
             if JSON:
                 print("Enviando dados JSON para a núvem", file=sys.stderr)
                 [series, smartdata] = to_json(data)
+                print(smartdata)
+                print(series)
                 if not series in attached:
                     response = session.post(ATTACH_URL, series)
                     print("[", str(response.status_code), "] (", len(series), ") ", series, sep='')

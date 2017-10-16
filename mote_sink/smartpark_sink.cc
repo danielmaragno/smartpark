@@ -5,6 +5,9 @@
 
 using namespace EPOS;
 
+Ultrasonic * Smartpark_Spot_Transducer::ultrasonic;
+GPIO * Smartpark_Spot_Transducer::led;
+
 const TSTP::Time DATA_PERIOD = 1 * 1000000;
 const TSTP::Time DATA_EXPIRY = 2 * DATA_PERIOD;
 const TSTP::Time INTEREST_EXPIRY = 2ull * 60 * 60 * 1000000;
@@ -52,7 +55,7 @@ int main()
     GPIO led('C', 3, GPIO::OUT);
 
     // Interest center points
-    TSTP::Coordinates center(0, 600, 100);
+    TSTP::Coordinates center(10, 10, 0);
 
     // Regions of interest
     TSTP::Time start = TSTP::now();

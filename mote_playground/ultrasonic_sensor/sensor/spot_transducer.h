@@ -5,13 +5,16 @@ Escrito por Ricardo Fritsche
 #ifndef SPOT_TRANSDUCER_H
 #define SPOT_TRANSDUCER_H
 
-#include <utility/observer.h>
 #include <smart_data.h>
-#include <transducer.h>
+#include <utility/observer.h>
 #include <tstp.h>
+#include <utility/ostream.h>
+#include <gpio.h>
 #include "ultrasonic.h"
 
 using namespace EPOS;
+
+OStream cout;
 
 class Smartpark_Spot_Transducer
 {
@@ -33,20 +36,24 @@ class Smartpark_Spot_Transducer
     static const bool INTERRUPT = false;
     static const bool POLLING = true;
 
-    Smartpark_Spot_Transducer() {}
+    Smartpark_Spot_Transducer(unsigned int dev) {}
 
     static void sense(unsigned int dev, Smart_Data<Smartpark_Spot_Transducer> * data) {
-        float s = ultrasonic[dev]->sense();
-
+        float s = Smartpark_Spot_Transducer::ultrasonic->sense();
+        GPIO led = *Smartpark_Spot_Transducer::led;
+        // float s = 0.0;
         if (s < 1.0) {
-          // cout << "Erro ao realizar leitura do sensor (" << s << " cm)" << endl;
+          cout << "Erro ao realizar leitura do sensor (" << s << " cm)" << endl;
           data->_value = SMARTPARK_ERROR;
+          led.set(false);
         } else if (s < SMARTPARK_TAKEN_VALUE) {
-          // cout << "Vaga OCUPADA :( (" << s << " cm)" << endl;
+          cout << "Vaga OCUPADA :( (" << s << " cm)" << endl;
           data->_value = SMARTPARK_TAKEN;
+          led.set(false);
         } else {
-          // cout << "Vaga LIVRE :) (" << s << " cm)" << endl;
+          cout << "Vaga LIVRE :) (" << s << " cm)" << endl;
           data->_value = SMARTPARK_FREE;
+          led.set(true);
         }
     }
 
@@ -55,7 +62,8 @@ class Smartpark_Spot_Transducer
     static void attach(Observer * obs) { /*_observed.attach(obs);*/ }
     static void detach(Observer * obs) { /*_observed.detach(obs);*/ }
 
-    static Ultrasonic * ultrasonic[MAX_DEVICES];
+    static Ultrasonic * ultrasonic;
+    static GPIO * led;
 
   // private:
   //   static Observed _observed;
