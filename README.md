@@ -47,7 +47,7 @@ faz a leitura pela USB e envia para a núvem do LISHA.
 ````
 // Conecta ao sink a USB
 cd gateway
-./gateway -c cert.pem -D smartlisha
+./gateway -c cert.pem -P 'SENHA'
 // Insira a senha do certificado
 
 // Para dar kill no gateway execute
