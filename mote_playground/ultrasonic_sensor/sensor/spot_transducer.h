@@ -24,7 +24,7 @@ class Smartpark_Spot_Transducer
     static const unsigned int SMARTPARK_ERROR = 0;
     static const unsigned int SMARTPARK_TAKEN = 10;
     static const unsigned int SMARTPARK_FREE  = 20;
-    static const float SMARTPARK_TAKEN_VALUE = 15.0; // 15
+    static const float SMARTPARK_TAKEN_VALUE = 15.0; // 15 cm
 
     typedef _UTIL::Observed Observed;
     typedef _UTIL::Observer Observer;
@@ -41,7 +41,7 @@ class Smartpark_Spot_Transducer
     static void sense(unsigned int dev, Smart_Data<Smartpark_Spot_Transducer> * data) {
         float s = Smartpark_Spot_Transducer::ultrasonic->sense();
         GPIO led = *Smartpark_Spot_Transducer::led;
-        // float s = 0.0;
+
         if (s < 1.0) {
           cout << "Erro ao realizar leitura do sensor (" << s << " cm)" << endl;
           data->_value = SMARTPARK_ERROR;
@@ -65,8 +65,6 @@ class Smartpark_Spot_Transducer
     static Ultrasonic * ultrasonic;
     static GPIO * led;
 
-  // private:
-  //   static Observed _observed;
 };
 
 typedef Smart_Data<Smartpark_Spot_Transducer> Smartpark_Spot_Smart_Data;
