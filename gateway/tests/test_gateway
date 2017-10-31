@@ -22,6 +22,7 @@ parser.add_argument('-a','--attach_url', help='Attach URL', default='https://iot
 parser.add_argument('-D','--domain', help='Data domain', default='smartpark')
 parser.add_argument('-U','--username', help='Data domain username', default='smartpark')
 parser.add_argument('-P','--password', help='User password', default='')
+parser.add_argument('-v','--value', help='Value for signal', default=0)
 
 args = vars(parser.parse_args())
 DEV = args['dev']
@@ -34,6 +35,7 @@ DOMAIN = args['domain']
 USERNAME = args['username']
 PASSWORD = args['password']
 JSON = True
+VALUE = args['value']
 
 # TIMESTAMP = 1509470765582000
 TIMESTAMP = int(datetime.datetime.now().timestamp()*1000000)
@@ -44,7 +46,7 @@ if JSON:
     from struct import unpack
 
 def to_json():
-    value = 20
+    value = VALUE
     error = 0
     confidence = 1
     x = 6
