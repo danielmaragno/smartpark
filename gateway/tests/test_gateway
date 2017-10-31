@@ -6,6 +6,7 @@ import time
 import serial
 import argparse
 import requests
+import datetime
 
 parser = argparse.ArgumentParser(description='EPOS Serial->IoT Gateway')
 
@@ -34,19 +35,22 @@ USERNAME = args['username']
 PASSWORD = args['password']
 JSON = True
 
+# TIMESTAMP = 1509470765582000
+TIMESTAMP = int(datetime.datetime.now().timestamp()*1000000)
+
 if JSON:
     import json
     import struct
     from struct import unpack
 
 def to_json():
-    value = 3
+    value = 20
     error = 0
     confidence = 1
     x = 6
     y = 7
     z = 8
-    t = 1508003516261516
+    t = TIMESTAMP
 
     version = "1.1" # Version 1, Static
     unit = 2224441636
@@ -54,8 +58,8 @@ def to_json():
     center_y = y
     center_z = z
     r = 10
-    t0 = 1508003516261516-1
-    t1 = 1508003516261516+1
+    t0 = TIMESTAMP-1
+    t1 = TIMESTAMP+1
 
     if DOMAIN or USERNAME or PASSWORD:
         credentials = {}
@@ -128,8 +132,8 @@ if __name__ == "__main__":
     print("POST [", str(response.status_code), "] (", len(smartdata), ") ", smartdata, sep='')
 
     print("Lendo dados da núvem")
-    t0 = 1508003516261516-1
-    t1 = 1508003516261516+1
+    t0 = TIMESTAMP-1
+    t1 = TIMESTAMP+1
     request_data = {
         'series' :
         {
